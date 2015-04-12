@@ -42,14 +42,12 @@ def parse(raw_file, delimiter):
 
     return parsed_data
 
-
 def main():
-    # Call our parse function and give it the needed parameters
+    #Call parse function & feed it params
     new_data = parse(MY_FILE, ",")
 
-    # Let's see what the data looks like!
+    # Show the new data
     print new_data
-
 
 if __name__ == "__main__":
     main()
