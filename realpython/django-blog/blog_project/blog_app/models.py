@@ -5,3 +5,6 @@ class Post(models.Model):
 	created_at = models.DateTimeField(auto_now_add = True)
 	title = models.CharField(max_length = 100)
 	content = models.TextField()
+
+	def __unicode__(self):
+		return "ID: " + str(self.id) + '/ ' + "Created At: " + str(self.created_at) + "/ " + "Title: " + self.title + '\n'
