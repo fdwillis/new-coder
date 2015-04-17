@@ -1,17 +1,15 @@
-<html>
-	<head>
-		<title>First Blog App With Python</title>
-	</head>
-	<body>
-		<h1>Blog</h1>
-		{% if latest_posts %}
-			<ul>
-				{% for post in latest_posts %}
-					<h3><a href="/blog/{{post.url}}">{{post.title}}</a></h3>
-					<p>{{post.content}}</p>
-					<small>{{post.created_at}}</small>
-				{% endfor %}
-			</ul>
-		{% endif %}
-	</body>
-</html>
+{% extends 'base.html' %}
+
+{% block content %}
+	<h1>Blog</h1>
+	{% if latest_posts %}
+		<ul>
+			{% for post in latest_posts %}
+				<h3><a href="/blog/{{post.url}}">{{post.title}}</a></h3>
+				<p>Content: {{post.content}}</p>
+				<small><p>Views: {{post.views}} </p></small>
+				<small>Date: {{post.created_at}}</small>
+			{% endfor %}
+		</ul>
+	{% endif %}
+{% endblock %}
