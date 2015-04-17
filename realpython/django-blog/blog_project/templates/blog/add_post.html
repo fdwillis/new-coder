@@ -3,7 +3,7 @@
 {% block content %}
 {% load bootstrap_tags %}
 	<h2>New Post</h2>
-	<form id='post_form' method="POST" action='/blog/add_post' enctype="multipart/form-data">
+	<form id='post_form' method="POST" action='/blog/add_post/' enctype="multipart/form-data">
 		{% csrf_token %}
 
 		{{ form | as_bootstrap }}

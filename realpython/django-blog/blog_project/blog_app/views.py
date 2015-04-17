@@ -43,7 +43,7 @@ def add_post(request):
 		form = PostForm(request.POST, request.FILES)
 		if form.is_valid():
 			form.save(commit = True)
-			return redirect(index)
+			return HttpResponse(post(request, Post.objects.order_by('-created_at')[0].title))
 		else:
 			print form.errors
 	else:
