@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
+{% load bootstrap_tags %}
 	<h2>New Post</h2>
 	<form id='post_form' method="POST" action='/blog/add_post' enctype="multipart/form-data">
 		{% csrf_token %}
 
-		{{ form }}
+		{{ form | as_bootstrap }}
 
 		<input type='submit' name='submit' value='New Post' >
 	</form>

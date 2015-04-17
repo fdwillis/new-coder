@@ -42,8 +42,13 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     # My Apps
     'blog_app',
+
+    # Third Party
+    'django_forms_bootstrap'
+
 )
 
 MIDDLEWARE_CLASSES = (
