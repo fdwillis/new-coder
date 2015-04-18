@@ -4,7 +4,7 @@ from blog_app.models import Post
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from blog_app.forms import PostForm
 
-# Create your views here.
+# helpers
 
 def encode_url(url):
 	return url.replace(" ", "_")
@@ -15,6 +15,9 @@ def template(page):
 def popular_posts():
 	popular_posts = Post.objects.order_by('-views')[:5]
 	return popular_posts
+
+
+# views
 
 def index(request):
 	latest_posts = Post.objects.all().order_by('-created_at')
