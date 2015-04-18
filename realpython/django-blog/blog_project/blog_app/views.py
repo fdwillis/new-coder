@@ -12,27 +12,29 @@ def encode_url(url):
 def template(page):
 	return loader.get_template("blog/" + page)
 
+def popular_posts():
+	popular_posts = Post.objects.order_by('-views')[:5]
+	return popular_posts
+
 def index(request):
 	latest_posts = Post.objects.all().order_by('-created_at')
-	popular_posts = Post.objects.order_by('-views')[:5]
 	t = template("index.html")
 	context_dict = {
 		'latest_posts': latest_posts,
-		'popular_posts': popular_posts,
+		'popular_posts': popular_posts(),
   }
-	for post in latest_posts:
-		post.url = encode_url(post.title)
-	for post in popular_posts:
-		post.url = encode_url(post.title)
 	c = Context(context_dict)
 	return HttpResponse(t.render(c))
 
-def post(request, post_url):
-	single_post = get_object_or_404(Post, 
-		title = post_url.replace("_", " "))
+def post(request, slug):
+	single_post = get_object_or_404(Post, slug=slug)
 	single_post.views += 1
 	single_post.save()
 	t = template("post.html")
+	context_dict = {
+		'single_post': single_post,
+		'popular_posts': popular_posts(),
+	}
 	c = Context({'single_post': single_post, })
 	return HttpResponse(t.render(c))
 
@@ -43,7 +45,7 @@ def add_post(request):
 		form = PostForm(request.POST, request.FILES)
 		if form.is_valid():
 			form.save(commit = True)
-			return HttpResponse(post(request, Post.objects.order_by('-created_at')[0].title))
+			return HttpResponse(post(request, Post.objects.order_by('-created_at')[0].slug))
 		else:
 			print form.errors
 	else:
