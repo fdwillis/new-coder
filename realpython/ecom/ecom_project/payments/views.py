@@ -2,8 +2,8 @@ from django.db import IntegrityError
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-from payments.forms import SigninForm, CardForm, UserForm
-from payments.models import User
+from .forms import SigninForm, CardForm, UserForm
+from .models import User
 import ecom_project.settings as settings
 import stripe
 import datetime
@@ -14,12 +14,12 @@ def soon():
 	soon = datetime.date.today() + datetime.timedelta(days = 30)
 	return { 'month': soon.month, 'year': soon.year }
 
-
 def sign_in(request):
 	user = None
 	if request.method == 'POST':
 		form = SigninForm(request.POST)
 		if form.is_valid():
+			# why can i call .cleaned_data below on SigninForm?
 			results = User.objects.filter(email = form.cleaned_data['email'])
 			if len(results) == 1:
 				if results[0].check_password(form.cleaned_data['password']):
