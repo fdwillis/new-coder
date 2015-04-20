@@ -10,6 +10,7 @@ from django.core.urlresolvers import resolve
 from .views import index
 from django.shortcuts import render_to_response
 import mock
+from main.factories import *
 from payments.models import User
 from django.test import RequestFactory
 
@@ -52,26 +53,26 @@ class MainPageTests(TestCase):
 
 	def test_loggedin_user(self):
 		#make a user
-		user = User(
-			name = 'test', 
-			email = 'test@t.com',
-		)
+		user = UserFactory()
+		user_id = user.id
+		print user_id
 		
+		request_factory = RequestFactory()
+		request = request_factory.get('/')
+
 		# Create session with a user
-		self.request.session = { 'user': '1' }
-		with mock.patch('main.views.User') as user_mock:
-			config = { "get.return_value": user }
-			user_mock.objects.configure_mock(**config)
+		request.session = { 'user': str(user_id) }
 
-			# grab index page
-			resp = index(self.request)
+		# grab index page
+		resp = index(request)
 
-			# return session back to original state
-			self.request.self = {}
-
-			# verify returns page for logged in user
-			expectedHtml = render_to_response('user.html', { 'user': user }).content
-			self.assertEquals(resp.content, expectedHtml)
+		# verify returns page for logged in user
+		expectedHtml = render_to_response(
+			'user.html', { 'user': user })
+		self.assertEquals(resp.content, expectedHtml.content)
+		
+		#reset session
+		request.session = {}
 
 
 

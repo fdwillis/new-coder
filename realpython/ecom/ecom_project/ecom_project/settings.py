@@ -1,4 +1,5 @@
 import os
+import sys
 
 STRIPE_SECRET = "sk_test_XpHQBqFhOibXS6zyYGvjN2Gc"
 STRIPE_PUBLISHABLE = 'pk_test_fXRPNLm1jrHNVlGd0rpAnjaG'
@@ -26,6 +27,9 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default.
     }
 }
+
+if 'test' in sys.argv or 'test_coverage' in sys.argv:
+    DATABASES['default']['ENGINE'] = 'django.db.backends.sqlite3'
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
@@ -124,7 +128,8 @@ INSTALLED_APPS = (
     'main',
     'contact',
     'payments',
-    "django.contrib.flatpages",
+    'django.contrib.flatpages',
+
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

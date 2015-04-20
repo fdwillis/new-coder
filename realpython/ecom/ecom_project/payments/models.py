@@ -3,7 +3,6 @@ from django.contrib.auth.models import AbstractBaseUser
 
 # Create your models here.
 
-
 class User(AbstractBaseUser):
 	name = models.CharField(max_length = 255)
 	email = models.EmailField(max_length = 255, unique = True)
@@ -14,6 +13,10 @@ class User(AbstractBaseUser):
 	updated_at = models.DateTimeField(auto_now = True)
 
 	USERNAME_FIELD = 'email'
+
+	@classmethod
+	def get_by_id(klass, uid):
+		return User.objects.get(pk = uid)
 
 	def __str__(self):
 		return self.email
