@@ -10,7 +10,7 @@ from django.core.urlresolvers import resolve
 from .views import index
 from django.shortcuts import render_to_response
 import mock
-from main.factories import *
+from .factories import *
 from payments.models import User
 from django.test import RequestFactory
 
